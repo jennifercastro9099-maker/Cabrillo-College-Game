@@ -1,0 +1,74 @@
+
+<body>
+
+<div class="game">
+
+  <h2 style="color:#b9a5ff; letter-spacing:2px;">
+    CABRILLO COLLEGE
+  </h2>
+
+  <p style="color:#c6c6d8;">
+    Presents
+  </p>
+
+  <h1>🎨 Color Shade Challenge</h1>
+
+  <p class="instructions">
+    Welcome!
+    <br><br>
+    Test your color perception.
+    Find the square that has a different
+    shade from all the others.
+    <br><br>
+    Each level gets harder.
+    How far can you go?
+  </p>
+
+  <button class="action" onclick="startGame()">
+    Start Game
+  </button>
+
+  <div id="gameArea" style="display:none;">
+
+    <div class="stats">
+      <div class="stat">
+        Level
+        <span id="level">1</span>
+      </div>
+
+      <div class="stat">
+        Score
+        <span id="score">0</span>
+      </div>
+
+      <div class="stat">
+        Lives
+        <span id="lives">❤️❤️❤️</span>
+      </div>
+    </div>
+
+    <div id="message">Find the different shade!</div>
+
+    <div id="grid"></div>
+
+    <button class="action" onclick="restartGame()">
+      Restart Game
+    </button>
+
+  </div>
+
+  <p class="footer">
+    Cabrillo College | Color Shade Challenge
+  </p>
+
+</div>
+
+<script>
+  function startGame() {
+    document.querySelector(".game > .action").style.display = "none";
+    document.getElementById("gameArea").style.display = "block";
+    restartGame();
+  }
+</script>
+
+</body>
