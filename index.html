@@ -1,74 +1,512 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Cabrillo College | Color Shade Challenge</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 25px 15px;
+  background: #151525;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.game-container {
+  max-width: 580px;
+  margin: 25px auto;
+  padding: 30px 20px;
+  background: #24243d;
+  border-radius: 22px;
+  box-shadow: 0 10px 35px #0005;
+}
+
+.college-name {
+  color: #c7a9ff;
+  font-size: 21px;
+  font-weight: bold;
+  letter-spacing: 3px;
+  margin-bottom: 12px;
+}
+
+h1 {
+  font-size: 30px;
+  margin: 15px 0;
+}
+
+p {
+  line-height: 1.6;
+}
+
+.instructions {
+  color: #ccccdd;
+  max-width: 420px;
+  margin: 15px auto 25px;
+}
+
+.action-button {
+  background: #8b6cff;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 15px 28px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 10px 5px;
+}
+
+.action-button:hover {
+  background: #a18aff;
+}
+
+.action-button:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 3px;
+}
+
+#welcomeScreen {
+  padding: 30px 5px;
+}
+
+#gameScreen {
+  display: none;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+  margin: 25px 0;
+}
+
+.stat {
+  flex: 1;
+  padding: 13px 5px;
+  background: #383852;
+  border-radius: 12px;
+  font-size: 13px;
+}
+
+.stat span {
+  display: block;
+  margin-top: 8px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+#message {
+  min-height: 30px;
+  color: #f5d77a;
+  font-weight: bold;
+  margin: 20px 0;
+}
+
+#grid {
+  display: grid;
+  gap: 9px;
+  max-width: 420px;
+  margin: 20px auto;
+}
+
+.tile {
+  width: 100%;
+  aspect-ratio: 1;
+  border: 3px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.12s;
+}
+
+.tile:hover {
+  transform: scale(.95);
+}
+
+.tile:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 3px;
+}
+
+#gameOver {
+  display: none;
+  padding: 20px;
+  background: #383852;
+  border-radius: 15px;
+  margin-top: 20px;
+}
+
+.footer {
+  margin-top: 30px;
+  color: #9999b5;
+  font-size: 12px;
+}
+
+@media (max-width: 400px) {
+  .game-container {
+    padding: 20px 12px;
+  }
+
+  h1 {
+    font-size: 25px;
+  }
+
+  .stats {
+    gap: 5px;
+  }
+}
+</style>
+</head>
+
 <body>
 
-<div class="game">
+<div class="game-container">
 
-  <h2 style="color:#b9a5ff; letter-spacing:2px;">
-    CABRILLO COLLEGE
-  </h2>
+  <!-- OPENING PAGE -->
 
-  <p style="color:#c6c6d8;">
-    Presents
-  </p>
+  <section id="welcomeScreen">
 
-  <h1>🎨 Color Shade Challenge</h1>
+    <div class="college-name">
+      CABRILLO COLLEGE
+    </div>
 
-  <p class="instructions">
-    Welcome!
-    <br><br>
-    Test your color perception.
-    Find the square that has a different
-    shade from all the others.
-    <br><br>
-    Each level gets harder.
-    How far can you go?
-  </p>
+    <p style="color:#aaaacc;">
+      Presents
+    </p>
 
-  <button class="action" onclick="startGame()">
-    Start Game
-  </button>
+    <h1>🎨 Color Shade Challenge</h1>
 
-  <div id="gameArea" style="display:none;">
+    <p class="instructions">
+      Welcome to the Color Shade Challenge!
+
+      <br><br>
+
+      Your mission is to find the one square
+      that has a different shade from all
+      the other squares.
+
+      <br><br>
+
+      Earn points, advance through levels,
+      and challenge your eyes!
+
+      <br><br>
+
+      You have three lives.
+      Every level gets harder.
+    </p>
+
+    <button class="action-button" onclick="startGame()">
+      START GAME
+    </button>
+
+  </section>
+
+
+  <!-- ACTUAL GAME -->
+
+  <section id="gameScreen">
+
+    <div class="college-name">
+      CABRILLO COLLEGE
+    </div>
+
+    <h1>Color Shade Challenge</h1>
 
     <div class="stats">
+
       <div class="stat">
-        Level
+        LEVEL
         <span id="level">1</span>
       </div>
 
       <div class="stat">
-        Score
+        SCORE
         <span id="score">0</span>
       </div>
 
       <div class="stat">
-        Lives
+        LIVES
         <span id="lives">❤️❤️❤️</span>
       </div>
+
     </div>
 
-    <div id="message">Find the different shade!</div>
+    <div id="message">
+      Find the different shade!
+    </div>
 
     <div id="grid"></div>
 
-    <button class="action" onclick="restartGame()">
-      Restart Game
+    <div id="gameOver">
+
+      <h2>🏆 GAME OVER!</h2>
+
+      <p>Your final score:</p>
+
+      <h1 id="finalScore">0</h1>
+
+      <p>Great effort! Can you beat your score?</p>
+
+      <button class="action-button" onclick="restartGame()">
+        PLAY AGAIN
+      </button>
+
+    </div>
+
+    <button class="action-button" onclick="restartGame()">
+      RESTART GAME
     </button>
 
-  </div>
+    <button class="action-button" onclick="goHome()">
+      HOME
+    </button>
 
-  <p class="footer">
-    Cabrillo College | Color Shade Challenge
-  </p>
+  </section>
+
+  <div class="footer">
+    CABRILLO COLLEGE | COLOR SHADE CHALLENGE
+    <br><br>
+    For entertainment purposes only.
+    Not a medical vision test.
+  </div>
 
 </div>
 
+
 <script>
-  function startGame() {
-    document.querySelector(".game > .action").style.display = "none";
-    document.getElementById("gameArea").style.display = "block";
-    restartGame();
+
+// GAME VARIABLES
+
+let level = 1;
+let score = 0;
+let lives = 3;
+let locked = false;
+let gameOver = false;
+let nextRoundTimer = null;
+
+
+// START THE GAME
+
+function startGame() {
+
+  document.getElementById("welcomeScreen").style.display = "none";
+
+  document.getElementById("gameScreen").style.display = "block";
+
+  restartGame();
+
+}
+
+
+// RETURN TO THE OPENING PAGE
+
+function goHome() {
+
+  clearTimeout(nextRoundTimer);
+
+  gameOver = true;
+  locked = true;
+
+  document.getElementById("gameScreen").style.display = "none";
+
+  document.getElementById("welcomeScreen").style.display = "block";
+
+}
+
+
+// RESET EVERYTHING
+
+function restartGame() {
+
+  clearTimeout(nextRoundTimer);
+
+  level = 1;
+  score = 0;
+  lives = 3;
+
+  locked = false;
+  gameOver = false;
+
+  document.getElementById("gameOver").style.display = "none";
+
+  startRound();
+
+}
+
+
+// CREATE A NEW ROUND
+
+function startRound() {
+
+  if (gameOver) return;
+
+  locked = false;
+
+  document.getElementById("level").textContent = level;
+
+  document.getElementById("score").textContent = score;
+
+  document.getElementById("lives").textContent =
+    "❤️".repeat(lives);
+
+  document.getElementById("message").textContent =
+    "Find the different shade!";
+
+  const grid = document.getElementById("grid");
+
+  // Increase the grid size as the player advances
+
+  let size = Math.min(
+    3 + Math.floor((level - 1) / 2),
+    6
+  );
+
+  let totalSquares = size * size;
+
+  grid.style.gridTemplateColumns =
+    `repeat(${size}, 1fr)`;
+
+  grid.innerHTML = "";
+
+
+  // Select a random color
+
+  let hue = Math.floor(Math.random() * 360);
+
+  let baseLightness = 48;
+
+  // Make the color difference smaller at higher levels
+
+  let difference = Math.max(
+    2,
+    23 - (level - 1) * 1.3
+  );
+
+  let differentLightness =
+    baseLightness + difference;
+
+
+  // Select the special square randomly
+
+  let specialSquare =
+    Math.floor(Math.random() * totalSquares);
+
+
+  // CREATE ALL THE SQUARES
+
+  for (let i = 0; i < totalSquares; i++) {
+
+    let tile = document.createElement("button");
+
+    tile.className = "tile";
+
+    tile.type = "button";
+
+    if (i === specialSquare) {
+
+      tile.style.backgroundColor =
+        `hsl(${hue}, 65%, ${differentLightness}%)`;
+
+      tile.setAttribute(
+        "aria-label",
+        "Different shade"
+      );
+
+    } else {
+
+      tile.style.backgroundColor =
+        `hsl(${hue}, 65%, ${baseLightness}%)`;
+
+      tile.setAttribute(
+        "aria-label",
+        "Regular shade"
+      );
+
+    }
+
+    // CHECK THE PLAYER'S ANSWER
+
+    tile.addEventListener("click", function() {
+
+      checkAnswer(i === specialSquare);
+
+    });
+
+    grid.appendChild(tile);
+
   }
+
+}
+
+
+// CHECK THE ANSWER
+
+function checkAnswer(correct) {
+
+  if (locked || gameOver) return;
+
+  locked = true;
+
+  if (correct) {
+
+    score += 10;
+
+    level++;
+
+    document.getElementById("message").textContent =
+      "🎉 CORRECT! Great eyesight!";
+
+    document.getElementById("score").textContent =
+      score;
+
+    nextRoundTimer = setTimeout(startRound, 700);
+
+  } else {
+
+    lives--;
+
+    document.getElementById("lives").textContent =
+      "❤️".repeat(lives);
+
+    if (lives <= 0) {
+
+      gameOver = true;
+
+      document.getElementById("message").textContent =
+        "Game finished!";
+
+      document.getElementById("finalScore").textContent =
+        score;
+
+      document.getElementById("grid").innerHTML = "";
+
+      document.getElementById("gameOver").style.display =
+        "block";
+
+    } else {
+
+      document.getElementById("message").textContent =
+        "❌ Incorrect! You lost one life.";
+
+      nextRoundTimer = setTimeout(startRound, 900);
+
+    }
+
+  }
+
+}
+
 </script>
 
 </body>
+</html>
